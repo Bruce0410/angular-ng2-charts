@@ -1,0 +1,41 @@
+<!-- <div>
+  <div style="display: block">
+    <canvas baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType">
+    </canvas>
+  </div>
+</div> -->
+
+<div class="row">
+  <div class="col-md-12" class="chart-container">
+    <div style="display: block" >
+      <canvas baseChart
+      [datasets]="barChartData"
+      [labels]="barChartLabels"
+      [options]="barChartOptions"
+      [legend]="barChartLegend"
+      [chartType]="barChartType"
+      [colors]="barChartColors"
+      (chartHover)="chartHovered($event)"
+      (chartClick)="chartClicked($event)"
+        ></canvas>
+    </div>
+    <button mat-button (click)="randomize()">Update</button>
+  </div>
+</div>
+<!--
+* data（SingleOrMultiDataSet） -設定圖表的點，MultiDataSet僅適用於line，bar，radar和doughnut，否則SingleDataSet
+* datasets（{ data: SingleDataSet, label: string }[]）-data有關label圖例和工具提示中顯示的數據集的信息
+* labels（Label[]）-x軸標籤。這是必要的圖表：line，bar和radar。而只是標籤（懸停）的圖表：polarArea，pie和doughnut。Label是single string，也可以是string[]代表多行標籤，其中每個數組元素都在換行符上。
+* chartType（ChartType） -表示的圖表的類型，它可以是：line，bar，radar，pie，polarArea，doughnut
+* options（ChartOptions）-圖表選項（來自Chart.js文檔）
+* colors（Color[]）-數據顏色，如果未指定，將使用默認和|或隨機顏色（請參見下文）
+* legend：（boolean = false）-如果為true，則在圖表下方顯示圖例，否則不顯示
+
+* chartClick：單擊圖表時觸發，返回有關有效點和標籤的信息
+* chartHover：在圖表上進行鼠標移動（懸停）時觸發，返回有關活動點和標籤的信息
+ -->
