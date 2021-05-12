@@ -67,9 +67,9 @@ export class MyBarChartComponent implements OnInit {
   // ];
   public barChartData: ChartDataSets[] = [
     // yAxisID 可以設定數值對應的Ｙ軸  type 設定線型
-    { data: [], label: '', yAxisID: 'y-axis-1' },
-    { data: [], label: '', yAxisID: 'y-axis-1', type: 'line' },
-    { data: [], label: '', type: 'line' }
+    { data: [], label: '金額', yAxisID: 'y-axis-1' },
+    { data: [], label: '數量', yAxisID: 'y-axis-1', type: 'line' },
+    { data: [], label: '次數', type: 'line' }
 
   ];
 
@@ -97,7 +97,9 @@ export class MyBarChartComponent implements OnInit {
       borderWidth: 2
     }
   ]
-
+  money: string[]=[];
+  index: string[] = [];
+  click: string[] = [];
   // events
   public chartClicked(e: any): void {
     if (e.active.length > 0) {
@@ -136,8 +138,12 @@ export class MyBarChartComponent implements OnInit {
       Math.round(Math.random() * 100000), // 50000
       Math.round(Math.random() * 100000), // 66400
       Math.round(Math.random() * 100000), // 10000
+      Math.round(Math.random() * 100000), // 66400
+      Math.round(Math.random() * 100000), // 10000
     ];
     this.barChartData[1].data = [ //退貨金額
+      Math.round(Math.random() * 25000),
+      Math.round(Math.random() * 25000),
       Math.round(Math.random() * 25000),
       Math.round(Math.random() * 25000),
       Math.round(Math.random() * 25000),
@@ -148,31 +154,59 @@ export class MyBarChartComponent implements OnInit {
       Math.round(Math.random() * 2500),
       Math.round(Math.random() * 2500),
       Math.round(Math.random() * 2500),
+      Math.round(Math.random() * 2500),
+      Math.round(Math.random() * 2500),
     ];
   }
 
   getData() {
-    return this.http.get('http://www.json-generator.com/api/json/get/cgrHMuHSDC?indent=2').subscribe((res: any) => {
+    return this.http.get('http://www.json-generator.com/api/json/get/bVWnyReTxe?indent=2').subscribe((res: any) => {
       console.log(res);
-      for (let a = 0; a < res.time.result4.length; a++) {
-        this.barChartLabels.push(res.time.result4[a].date);
+      for (let index = 0; index < res.data.length; index++) {
+        const element = res.data[index].金額;
+        const element2 = res.data[index].銷售日期;
+        const element3 = res.data[index].數量;
+        const element4 = res.data[index].clicks;
+        this.money.push(element)
+        this.barChartLabels.push(element2);
+        this.index.push(element3)
+        this.click.push(element4)
       }
+
+      for (let i = 0; i <= this.money.length; i++) {
+        const element = this.money[i];
+        this.barChartData[0].data?.push(parseInt(element))
+      }
+
+      for (let i = 0; i < this.index.length; i++) {
+        const element = this.index[i];
+        this.barChartData[1].data?.push(parseInt(element))
+      }
+
+      for (let i = 0; i < this.click.length; i++) {
+        const element = this.click[i];
+        this.barChartData[2].data?.push(parseInt(element))
+      }
+
+      // for (let a = 0; a < res.time.result4.length; a++) {
+      //   this.barChartLabels.push(res.time.result4[a].date);
+      // }
       // 金額資料
-      var d1 = res.data.result[0].data;
-      var d2 = res.data.result2[0].data;
-      var d3 = res.data.result3[0].data;
+      // var d1 = res.data.result[0].data;
+      // var d2 = res.data.result2[0].data;
+      // var d3 = res.data.result3[0].data;
       // label
-      var l1 = res.data.result[0].label;
-      var l2 = res.data.result2[0].label;
-      var l3 = res.data.result3[0].label;
+      // var l1 = res.data.result[0].label;
+      // var l2 = res.data.result2[0].label;
+      // var l3 = res.data.result3[0].label;
 
-      this.barChartData[0].data = d1;
-      this.barChartData[1].data = d2;
-      this.barChartData[2].data = d3;
+      // this.barChartData[0].data = d1;
+      // this.barChartData[1].data = d2;
+      // this.barChartData[2].data = d3;
 
-      this.barChartData[0].label = l1;
-      this.barChartData[1].label = l2;
-      this.barChartData[2].label = l3;
+      // this.barChartData[0].label = l1;
+      // this.barChartData[1].label = l2;
+      // this.barChartData[2].label = l3;
     })
   }
 }
